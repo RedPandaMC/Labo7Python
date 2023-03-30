@@ -1,3 +1,6 @@
+.git
+_input-markdown-document-here
+_site
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
