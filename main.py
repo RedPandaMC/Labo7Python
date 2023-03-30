@@ -34,7 +34,6 @@ def splitfile():
         print("No yaml found in markdown document")
     return {'yaml':frontmatter,'md':backmatter}
 
-
-
 if __name__ == "__main__":
     dir_checker()
+    file_tp = splitfile()
