@@ -24,14 +24,14 @@ def splitfile():
     sitemarkdown = open("./_input-markdown-document-here/site_base.md","r",encoding="UTF-8")
     smlines = sitemarkdown.read()
     try:
-        yaml_end = smlines.index('---', 4) + 4
-
+        yaml_end = smlines.index('---', 1)
         frontmatter = smlines[:yaml_end]
         backmatter = smlines[yaml_end:]
     except ValueError:
+        yaml_end = 0
         frontmatter = ''
-        backmatter = ''
-
+        backmatter = smlines[yaml_end:]
+        print("No yaml found in markdown document")
     return {'yaml':frontmatter,'md':backmatter}
 
 
