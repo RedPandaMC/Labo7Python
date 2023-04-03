@@ -1,4 +1,5 @@
 import os
+import yaml2html as y2h
 
 
 def dir_checker():
@@ -10,8 +11,13 @@ def dir_checker():
         os.mkdir("./_site")
     if not os.path.exists("_input-markdown-document-here"):
         os.mkdir("./_input-markdown-document-here")
-        basefile = open("./_input-markdown-document-here/site_base.md","w",encoding="UTF-8")
-        basefile.write("Please only write markdown and YAML here.")
+        basefile = open(
+            "./_input-markdown-document-here/site_base.md", "w", encoding="UTF-8"
+        )
+        basefile.write(
+            "---\nlang: en\ncharset: UTF-8\ntitle: Name\ntemplate: \
+                       Name\ndate: 01/01/2000\n---\n\n# start typing\n"
+        )
         basefile.close()
 
 
@@ -21,19 +27,25 @@ def splitfile():
     file and splits it into the yaml part and the markdown
     part
     """
-    sitemarkdown = open("./_input-markdown-document-here/site_base.md","r",encoding="UTF-8")
+    sitemarkdown = open(
+        "./_input-markdown-document-here/site_base.md", "r", encoding="UTF-8"
+    )
     smlines = sitemarkdown.read()
     try:
-        yaml_end = smlines.index('---', 1)
-        frontmatter = smlines[:yaml_end]
-        backmatter = smlines[yaml_end:]
+        yaml_end = smlines.index("---", 1)
+        frontmatter = smlines[3:yaml_end]
+        backmatter = smlines[yaml_end + 3 :]
     except ValueError:
         yaml_end = 0
-        frontmatter = ''
+        frontmatter = ""
         backmatter = smlines[yaml_end:]
         print("No yaml found in markdown document")
-    return {'yaml':frontmatter,'md':backmatter}
+    frontmatter = frontmatter.replace("\n", ",").removeprefix(",").removesuffix(",")
+    backmatter = backmatter.replace("\n", "")
+    return {"yaml": frontmatter, "md": backmatter}
+
 
 if __name__ == "__main__":
     dir_checker()
-    file_tp = splitfile()
+    file_dic = splitfile()
+    y2h.yaml2html_converter(file_dic["yaml"])
