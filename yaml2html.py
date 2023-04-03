@@ -44,7 +44,9 @@ def yaml2html_converter(yaml: str):
     """
     yaml_dic = string_to_dict(yaml)
     templates = get_template_names()
-    if yaml_dic["template"].removesuffix(".html") not in templates:
+    if yaml_dic["Template"].removesuffix(".html") not in templates:
         exit("Template doesn't exist in _html-templates")
-    html_files = get_html_files(yaml_dic["template"].removesuffix(".html"))
-    print(html_files)
+    html_files = get_html_files(yaml_dic["Template"].removesuffix(".html"))
+    # get the specified page in the yaml_dic then paste
+    # the front matter in a copy of the html file
+    # from _html-templates in _site 

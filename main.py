@@ -15,8 +15,7 @@ def dir_checker():
             "./_input-markdown-document-here/site_base.md", "w", encoding="UTF-8"
         )
         basefile.write(
-            "---\nlang: en\ncharset: UTF-8\ntitle: Name\ntemplate: \
-                       Name\ndate: 01/01/2000\n---\n\n# start typing\n"
+            "---\nDate: 01/01/2000\nTitle: Name\nTemplate: Name\nPage: Name---\n\n# start typing\n"
         )
         basefile.close()
 
