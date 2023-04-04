@@ -4,7 +4,8 @@ import markdown
 
 from jinja2 import Environment, FileSystemLoader
 
-#region step (1)
+
+# region step (1)
 def splitfile():
     """
     This function is used to open the given markdown
@@ -26,8 +27,10 @@ def splitfile():
         print("No yaml found in markdown document")
     frontmatter = frontmatter.replace("\n", ",").removeprefix(",").removesuffix(",")
     return {"yaml": frontmatter, "md": backmatter}
-#endregion
-#region step (2)
+
+
+# endregion
+# region step (2)
 def string_to_dict(string: str):
     """
     This function turns a yaml string into a yaml dictionary
@@ -68,35 +71,50 @@ def get_template_names():
 
 def cp_mv_specifiedfile(yaml_dic: dict):
     """
-    Copies a specified file and moves it to directory _site, if it doesn't exist
+    Copies a specified file and moves it to directory _site, along with index.html 
+    if not already present.
     """
-    if not os.path.isfile(os.path.join("_site", yaml_dic["PageType"] + ".html")):
-        template = yaml_dic["TemplateName"].removesuffix(".html")
-        html_files = get_html_files(template_name=template)
+    index_exists = os.path.isfile(os.path.join("_site", "index.html"))
 
-        source_file = f"_html-templates/{template}/{html_files[yaml_dic['PageType']]}"
-        target_dir = "_site"
-        shutil.copy2(source_file, target_dir)
-#endregion
-#region step (3)
+    template = yaml_dic["TemplateName"].removesuffix(".html")
+    html_files = get_html_files(template)
+    source_file = f"_html-templates/{template}/{html_files[yaml_dic['PageType']]}"
+    target_dir = "_site"
+    shutil.copy2(source_file, target_dir)
+
+    if not index_exists:
+        shutil.copy2(f"_html-templates/{template}/index.html", target_dir)
+
+
+# endregion
+# region step (3)
 def markdown2html(file_dic: dict):
     """
     Returns all html in specified file + added html from markdown
     """
     html = markdown.markdown(file_dic["md"])
     return html
-#endregion
-#region step (4)
+
+
+# endregion
+# region step (4)
 def printer(full_dic: dict):
     """
     Prints the given markdown and yaml in a given file in _site
     """
     env = Environment(loader=FileSystemLoader("_site"))
-    template = env.get_template(full_dic['PageType'] + ".html")
+    template = env.get_template(full_dic["PageType"] + ".html")
     output = template.render(data=full_dic)
     with open(f"_site/{full_dic['PageType']}.html", "w", encoding="UTF-8") as f:
         f.write(output)
-#endregion
+    if full_dic['PageType'] == 'post':
+        try:
+            os.rename(f"_site/{full_dic['PageType']}.html", f"_site/{full_dic['Title']}.html")
+        except FileExistsError:
+            os.remove(f"_site/{full_dic['PageType']}.html")
+            exit("Please change the title of your post in the markdown document.")
+# endregion
+
 
 def md2html_converter():
     """

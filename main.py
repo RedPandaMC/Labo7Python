@@ -1,5 +1,6 @@
 import os
 import md2html as md2h
+import json
 
 def dir_checker():
     """
@@ -17,6 +18,17 @@ def dir_checker():
         basefile.close()
         exit("Created directories, please rerun the script.")
 
+
+def write_html_to_json():
+    directory = os.getcwd() + '/_site'
+    html_files = [filename for filename
+                  in os.listdir(directory) 
+                  if filename.endswith(".html")]
+    with open('_site/data.json', 'w',encoding='UTF-8') as file:
+        json.dump(html_files, file)
+
+
 if __name__ == "__main__":
     dir_checker()
     md2h.md2html_converter()
+    write_html_to_json()
