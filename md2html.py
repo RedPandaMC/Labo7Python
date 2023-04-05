@@ -1,7 +1,6 @@
 import os
 import shutil
 import markdown
-
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -27,8 +26,6 @@ def splitfile():
         print("No yaml found in markdown document")
     frontmatter = frontmatter.replace("\n", ",").removeprefix(",").removesuffix(",")
     return {"yaml": frontmatter, "md": backmatter}
-
-
 # endregion
 # region step (2)
 def string_to_dict(string: str):
@@ -71,10 +68,12 @@ def get_template_names():
 
 def cp_mv_specifiedfile(yaml_dic: dict):
     """
-    Copies a specified file and moves it to directory _site, along with index.html 
+    Copies specified files and moves them to directory _site, 
+    along with home.html, style.css, reset.css, script.js 
     if not already present.
     """
-    index_exists = os.path.isfile(os.path.join("_site", "index.html"))
+    files = os.listdir("_site")
+    index_exists = any(["home" in file.lower() for file in files])
 
     template = yaml_dic["TemplateName"].removesuffix(".html")
     html_files = get_html_files(template)
@@ -83,8 +82,21 @@ def cp_mv_specifiedfile(yaml_dic: dict):
     shutil.copy2(source_file, target_dir)
 
     if not index_exists:
-        shutil.copy2(f"_html-templates/{template}/index.html", target_dir)
+        shutil.copy2(f"_html-templates/{template}/home.html", target_dir)
 
+    # Copy the CSS and JS files if they don't already exist in the _site directory
+    css_files = ["style.css", "reset.css"]
+    js_file = "script.js"
+    for css_file in css_files:
+        css_source_file = f"_html-templates/{template}/{css_file}"
+        css_target_file = f"_site/{css_file}"
+        if not os.path.isfile(css_target_file):
+            shutil.copy2(css_source_file, css_target_file)
+            
+    js_source_file = f"_html-templates/{template}/{js_file}"
+    js_target_file = f"_site/{js_file}"
+    if not os.path.isfile(js_target_file):
+        shutil.copy2(js_source_file, js_target_file)
 
 # endregion
 # region step (3)
@@ -107,12 +119,14 @@ def printer(full_dic: dict):
     output = template.render(data=full_dic)
     with open(f"_site/{full_dic['PageType']}.html", "w", encoding="UTF-8") as f:
         f.write(output)
-    if full_dic['PageType'] == 'post':
-        try:
+    try:
+        if 'post' not in full_dic['PageType']:
             os.rename(f"_site/{full_dic['PageType']}.html", f"_site/{full_dic['Title']}.html")
-        except FileExistsError:
-            os.remove(f"_site/{full_dic['PageType']}.html")
-            exit("Please change the title of your post in the markdown document.")
+        else:
+            os.rename(f"_site/{full_dic['PageType']}.html", f"_site/{full_dic['Title']}__{full_dic['Date'].replace('/','-')}.html")
+    except FileExistsError:
+        os.remove(f"_site/{full_dic['PageType']}.html")
+        exit("Please change the title of your post in the markdown document.")
 # endregion
 
 
@@ -130,5 +144,5 @@ def md2html_converter():
     cp_mv_specifiedfile(yaml_dic)
 
     full_dic = yaml_dic
-    full_dic["content"] = markdown2html(file_dic)
+    full_dic["Content"] = markdown2html(file_dic)
     printer(full_dic)
