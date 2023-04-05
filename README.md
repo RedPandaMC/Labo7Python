@@ -2,7 +2,7 @@
 
 This repository has a basic tool to create static websites. You can use a markdown document from the '_input-markdown-document-here' folder to generate web pages with the help of the main.py code. There are two templates to choose from, called "earth" and "sky", that come with three different types of web pages each. This makes it easy to create good-looking static websites with little effort.
 
-The include page in each template:
+The include pages in each template:
 - homepage
 - post
 - aboutme
