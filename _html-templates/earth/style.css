@@ -4,11 +4,11 @@ h1{
 }
 
 nav {
-    background-color: #014367;
+    background-color: #BF2A3B;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    border: #ededed solid 4px;
+    border: #CCC7B8 solid 4px;
     justify-content: center;
     align-items: center;
     height: 50px;
@@ -30,7 +30,7 @@ nav {
   }
   
   #page-links li a {
-    color: #ededed;
+    color: #CCC7B8;
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;

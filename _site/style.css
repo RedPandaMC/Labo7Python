@@ -1,0 +1,96 @@
+body h1 {
+  padding: 20px 10px;
+  font-family: "Nunito";
+  font-size: 25px;
+}
+
+body h2 {
+  padding: 20px 10px;
+  font-family: "Nunito";
+  font-size: 20px;
+}
+
+body h3 {
+  padding: 20px 10px;
+  font-family: "Nunito";
+  font-size: 15px;
+}
+
+body h4 {
+  padding: 20px 10px;
+  font-family: "Nunito";
+  font-size: 10px;
+}
+
+body p {
+  padding: 8px 10px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: 50vw;
+}
+
+#datum, #auteur
+{
+    box-sizing: border-box;
+    width: 100%;
+    text-align: right;
+    font-style: italic;
+    padding: 0px 10px;
+    font-size: small;
+    color: #b3b2b2;
+}
+
+body ul:not(#page-links) li, body ol li
+{
+    padding: 2px 10px;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    width: 50vw;
+}
+
+body ol:not(#page-links) li
+{
+    width: 90vw;
+}
+
+nav {
+  background-color: #014367;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  border: #ffffff solid 8px;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+#page-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#page-links li {
+  padding: 10px;
+  margin: 0 10px;
+}
+
+#page-links li a {
+  color: #ededed;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+footer {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  background-color: #014367;
+  width: 100vw;
+  height: 50px;
+  border: #ffffff solid 8px;
+}
