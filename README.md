@@ -24,3 +24,5 @@ PageType: -> the html page you want to use from the template you chose above
 markdown goes here
 ```
 
+A handy guid can be found here
+https://www.markdownguide.org/basic-syntax/#code
