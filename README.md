@@ -11,7 +11,8 @@ you can add as many of these pages as you want in the "_site" directory, which w
 
 Instructions for using the markdown document.
 
-``
+
+```
 ---
 Date: -> when writing a post you should put a date here, otherwise just put a random value here
 Title: -> the title of the generated html page document
@@ -20,5 +21,6 @@ TemplateName: -> the template you want to use
 PageType: -> the html page you want to use from the template you chose above
 ---
 
->markdown goes here<
-``
+markdown goes here
+```
+
