@@ -25,4 +25,4 @@ markdown goes here
 ```
 
 A handy guid can be found here
-https://www.markdownguide.org/basic-syntax/#code
+https://www.markdownguide.org/basic-syntax
